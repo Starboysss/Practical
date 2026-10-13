@@ -25,4 +25,29 @@
 .detail-item.full-width { grid-column: span 2; }
 .detail-item .label { font-size: 0.75rem; text-transform: uppercase; opacity: 0.6; font-weight: bold; margin-bottom: 0.25rem; }
 .no-results { grid-column: 1 / -1; text-align: center; padding: 2rem; opacity: 0.6; }
+
+/* NEW: Loading Spinner Styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid var(--border-color);
+  border-top: 6px solid var(--btn-bg);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 600px) { .detail-grid { grid-template-columns: 1fr; } .detail-item.full-width { grid-column: span 1; } .theme-toggle { position: static; margin-top: 1rem; } }

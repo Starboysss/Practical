@@ -8,6 +8,9 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  
+  // NEW: State for the loading screen
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -21,8 +24,22 @@ function App() {
     );
   };
 
-  const handleViewUser = (id) => setSelectedUserId(id);
-  const handleBackToList = () => { setSelectedUserId(null); setSearchQuery(''); };
+  // UPDATED: Add the 3-second delay when viewing a user
+  const handleViewUser = (id) => {
+    setIsLoading(true);
+    
+    // Wait 3 seconds (3000 milliseconds) before showing the profile
+    setTimeout(() => {
+      setSelectedUserId(id);
+      setIsLoading(false);
+    }, 3000);
+  };
+
+  const handleBackToList = () => { 
+    setSelectedUserId(null); 
+    setSearchQuery(''); 
+  };
+  
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   const selectedUser = usersData.find(user => user.id === selectedUserId);
@@ -38,7 +55,13 @@ function App() {
       </header>
 
       <main className="app-main">
-        {selectedUserId ? (
+        {/* NEW: Show loading spinner if isLoading is true */}
+        {isLoading ? (
+          <div className="loading-container">
+            <div className="spinner"></div>
+            <h2>Loading Profile...</h2>
+          </div>
+        ) : selectedUserId ? (
           <UserDetailCard user={selectedUser} onBack={handleBackToList} />
         ) : (
           <>
